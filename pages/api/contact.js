@@ -27,9 +27,11 @@ const handler = async (req, res) => {
     console.log(newMessage);
 
     let clientMongo;
-    let connectionString = `mongodb+srv://${process.env.mongodb_user}:${process.env.mongodb_password}@${process.env.mongodb_cluster}.xzvva.mongodb.net/${process.env.mongodb_database}?retryWrites=true&w=majority`;
+
     try {
-      clientMongo = await MongoClient.connect(connectionString);
+      clientMongo = await MongoClient.connect(
+        'mongodb+srv://kosta:155198914@cluster0.xzvva.mongodb.net/nextjs-blog?retryWrites=true&w=majority'
+      );
     } catch (error) {
       res.status(500).json({ message: error.message });
       return;
