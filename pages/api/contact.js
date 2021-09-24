@@ -29,9 +29,7 @@ const handler = async (req, res) => {
     let clientMongo;
 
     try {
-      clientMongo = await MongoClient.connect(
-        'mongodb+srv://kosta:155198914@cluster0.xzvva.mongodb.net/nextjs-blog?retryWrites=true&w=majority'
-      );
+      clientMongo = await MongoClient.connect(process.env.MONGO_URI);
     } catch (error) {
       res.status(500).json({ message: error.message });
       return;
@@ -40,7 +38,7 @@ const handler = async (req, res) => {
     const db = clientMongo.db();
 
     try {
-      const result = await db.collection('messages').insertOne(newMessage);
+      await db.collection('messages').insertOne(newMessage);
     } catch (error) {
       clientMongo.close();
       res.status(500).json({ message: 'Storing message failed!' });
