@@ -2,6 +2,7 @@ import { MongoClient } from 'mongodb';
 
 const handler = async (req, res) => {
   // next podrzava middleware urlencoded() i json()
+  const connectionString = process.env.MONGO_URI;
   if (req.method === 'POST') {
     const { email, name, message } = req.body;
 
@@ -29,7 +30,7 @@ const handler = async (req, res) => {
     let clientMongo;
 
     try {
-      clientMongo = await MongoClient.connect(process.env.MONGO_URI);
+      clientMongo = await MongoClient.connect(connectionString);
     } catch (error) {
       res.status(500).json({ message: error.message });
       return;
